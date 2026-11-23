@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* Global Theme */
+@theme {
+  --color-primary: #111111;
+  --color-secondary: #977947;
+  --color-text: #5e5e5e;
+  --color-white: #ffffff;
+  --color-accent: #81673C;
+
+  --font-heading: 'Cormorant Garamond', serif;
+  --font-body: 'Manrope', sans-serif;
+}
+
+/* Base */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-text);
+    background: var(--color-white);
+    line-height: 1.6;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    color: var(--color-primary);
+    line-height: 1.1;
+  }
+
+  p {
+    line-height: 1.7;
+  }
+}
+
+
+/* Layout */
+@layer components {
+  .main {
+    width: 100%;
+  }
+}
+
+/* Container: overrides Tailwind's built-in container */
+@utility container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 13px;
+
+  @media (min-width: 641px) {
+    padding-inline: 20px;
+  }
+}
+
+/* Heading Classes (use on any tag) */
+@layer components {
+  .heading-1 { font-size: clamp(46px, 1.5rem + 5vw, 84px); }
+  .heading-2 { font-size: clamp(36px, 1.2rem + 3.5vw, 56px); }
+  .heading-3 { font-size: clamp(28px, 1.2rem + 1.5vw, 36px); }
+  .heading-4 { font-size: clamp(22px, 1.2rem + 0.5vw, 24px); }
+}
+
+/* Buttons */
+@layer components {
+  .btn-primary,
+  .btn-secondary,
+  .btn-third {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+    border-radius: 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Primary Button */
+  .btn-primary,
+  .btn-secondary {
+    padding: 11px 17px;
+    border: 1px solid var(--color-primary);
+  }
+
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  /* Secondary Button */
+  .btn-secondary {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+  }
+
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    background-color: var(--color-secondary);
+    border-color: var(--color-secondary);
+    color: var(--color-white);
+  }
+
+  /* Third Button - Text with Bottom Border */
+  .btn-third {
+    padding: 0 0 10px;
+    background-color: transparent;
+    color: var(--color-primary);
+    letter-spacing: 0.04em;
+    border: none;
+    border-bottom: 1px solid var(--color-secondary);
+  }
+
+  .btn-third:hover {
+    color: var(--color-secondary);
+  }
+
+  /* Keyboard focus */
+  .btn-primary:focus-visible,
+  .btn-secondary:focus-visible,
+  .btn-third:focus-visible {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 2px;
+  }
+}
+
+
+/* Header */
+@layer components {
+  .header {
+    width: 100%;
+    background: var(--color-white);
+  }
+
+  /* Menu link (mobile: plain text, no line) */
+  .nav-link {
+    position: relative;
+    display: block;
+    padding: 8px 0;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 400;
+    text-transform: capitalize;
+    color: var(--color-primary);
+    transition: color 0.3s ease;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--color-accent);
+  }
+
+  /* Desktop: bottom line grows from left to right */
+  @media (min-width: 1024px) {
+    .nav-link {
+      display: inline-block;
+      padding: 0 0 8px;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background-color: var(--color-accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+@theme {
+
+  /* Logo carousel: moves left, 40s = slow (increase for slower) */
+  --animate-marquee: marquee 40s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+}
